@@ -1,7 +1,7 @@
 #pragma once
 
 #include<stdio.h>
-#include<assert.h>
+#include<assert.h> 
 #include<windows.h>
 #include<malloc.h>
 
@@ -12,16 +12,16 @@ typedef struct BinarySearchTreeNode
 {
 	struct BinarySearchTreeNode* _left;
 	struct BinarySearchTreeNode* _right;
-	KeyType _key;//²éÕÒ
+	KeyType _key;//æŸ¥æ‰¾
 	ValueType _value;
 }BSTreeNode;
 
-BSTreeNode *BuyBSTreeNode(KeyType _key, ValueType _value);//´´½¨½Úµã
+BSTreeNode *BuyBSTreeNode(KeyType _key, ValueType _value);//åˆ›å»ºèŠ‚ç‚¹
 int BSTreeNodeInsert(BSTreeNode** tree, KeyType key, ValueType value);
-BSTreeNode* BSTreeNodeFind(BSTreeNode* tree, KeyType key);//²éÕÒ
-int BSTreeNodeRemove(BSTreeNode** tree, KeyType key);//É¾³ý
+BSTreeNode* BSTreeNodeFind(BSTreeNode* tree, KeyType key);//æŸ¥æ‰¾
+int BSTreeNodeRemove(BSTreeNode** tree, KeyType key);//åˆ é™¤
 
-void BSTreeInOrder(BSTreeNode* tree)//ÖÐÐò±éÀú
+void BSTreeInOrder(BSTreeNode* tree)//ä¸­åºéåŽ†
 {
 	if (NULL == tree)
 		return;
@@ -49,9 +49,9 @@ int BSTreeNodeRemove(BSTreeNode** tree, KeyType key)
 	BSTreeNode* parent = *tree;
 	BSTreeNode* del = NULL;
 	BSTreeNode* sub = NULL;
-	//1.×óÎª¿Õ
-	//2.ÓÒÎª¿Õ
-	//3.×óÓÒ²»Îª¿Õ
+	//1.å·¦ä¸ºç©º
+	//2.å³ä¸ºç©º
+	//3.å·¦å³ä¸ä¸ºç©º
 	while (cur)
 	{
 
@@ -65,21 +65,21 @@ int BSTreeNodeRemove(BSTreeNode** tree, KeyType key)
 			parent = cur;
 			cur = cur->_left;
 		}
-		//ÒÑ¾­ÕÒµ½±»É¾³ý½Úµãcur
+		//å·²ç»æ‰¾åˆ°è¢«åˆ é™¤èŠ‚ç‚¹cur
 		else
 		{
 			del = cur;
-			if (cur->_left == NULL)//×óº¢×Ó¿Õ
+			if (cur->_left == NULL)//å·¦å­©å­ç©º
 			{
 				if (parent->_left == cur)
 					parent->_left = cur->_right;
 				else if (parent->_right == cur)
 					parent->_right = cur->_right;
-				else if (parent == cur)//ËùÉ¾½ÚµãÎÞº¢×Ó
+				else if (parent == cur)//æ‰€åˆ èŠ‚ç‚¹æ— å­©å­
 					*tree = parent->_right;
-				cur = NULL;//É¾³ýºóÒªÌø³öÑ­»·
+				cur = NULL;//åˆ é™¤åŽè¦è·³å‡ºå¾ªçŽ¯
 			}
-			else if (cur->_right == NULL)//ÓÒº¢×ÓÎª¿Õ
+			else if (cur->_right == NULL)//å³å­©å­ä¸ºç©º
 			{
 				if (parent->_right == cur)
 					parent->_right = cur->_left;
@@ -89,7 +89,7 @@ int BSTreeNodeRemove(BSTreeNode** tree, KeyType key)
 					*tree = parent->_left;
 				cur = NULL;
 			}
-			else//×óÓÒº¢×Ó¶¼²»Îª¿Õ
+			else//å·¦å³å­©å­éƒ½ä¸ä¸ºç©º
 			{
 				sub = cur;
 				del = cur->_right;
@@ -111,7 +111,7 @@ int BSTreeNodeRemove(BSTreeNode** tree, KeyType key)
 	del = NULL;
 	return 0;
 }
-int BSTreeNodeInsert(BSTreeNode** tree, KeyType key, ValueType value)//·ÇµÝ¹é
+int BSTreeNodeInsert(BSTreeNode** tree, KeyType key, ValueType value)//éžé€’å½’
 {
 	if (*tree == NULL)
 	{
@@ -123,19 +123,19 @@ int BSTreeNodeInsert(BSTreeNode** tree, KeyType key, ValueType value)//·ÇµÝ¹é
 	while (cur)
 	{
 		parent = cur;
-		if (strcmp(parent->_key, key) > 0)//×óÊ÷
+		if (strcmp(parent->_key, key) > 0)//å·¦æ ‘
 		{
 			cur = cur->_left;
 		}
-		else if (strcmp(parent->_key, key) < 0)//ÓÒÊ÷
+		else if (strcmp(parent->_key, key) < 0)//å³æ ‘
 		{
 			cur = cur->_right;
 		}
 		else
 			return -1;
 	}
-	//Ê÷ÀïÃ»ÓÐÏàÍ¬Êý¾Ý£¬²åÈë£¬ÅÐ¶ÏËù²åÎ»ÖÃ
-	if (strcmp(parent->_key, key) > 0)//Èç¹ûÊý¾ÝÐ¡ÓÚ¸¸Ç×£¬Ïò¸¸Ç×½ÚµãµÄ×óÊ÷Á´½Ó
+	//æ ‘é‡Œæ²¡æœ‰ç›¸åŒæ•°æ®ï¼Œæ’å…¥ï¼Œåˆ¤æ–­æ‰€æ’ä½ç½®
+	if (strcmp(parent->_key, key) > 0)//å¦‚æžœæ•°æ®å°äºŽçˆ¶äº²ï¼Œå‘çˆ¶äº²èŠ‚ç‚¹çš„å·¦æ ‘é“¾æŽ¥
 		parent->_left = BuyBSTreeNode(key, value);
 	else
 		parent->_right = BuyBSTreeNode(key, value);
@@ -159,11 +159,11 @@ BSTreeNode* BSTreeNodeFind(BSTreeNode* tree, KeyType key)
 void TestBSTree()
 {
 	BSTreeNode* tree = NULL;
-	BSTreeNodeInsert(&tree, "man", "ÄÐÈË");
-	BSTreeNodeInsert(&tree, "list", "Á´±í");
-	BSTreeNodeInsert(&tree, "heap", "¶Ñ");
-	BSTreeNodeInsert(&tree, "return", "·µ»Ø");
-	BSTreeNodeInsert(&tree, "student", "Ñ§Éú");
+	BSTreeNodeInsert(&tree, "man", "ç”·äºº");
+	BSTreeNodeInsert(&tree, "list", "é“¾è¡¨");
+	BSTreeNodeInsert(&tree, "heap", "å †");
+	BSTreeNodeInsert(&tree, "return", "è¿”å›ž");
+	BSTreeNodeInsert(&tree, "student", "å­¦ç”Ÿ");
 	BSTreeInOrder(tree);
 	printf("\n");
 	printf("list->%s\n", BSTreeNodeFind(tree, "list")->_value);
