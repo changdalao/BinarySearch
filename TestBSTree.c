@@ -1,6 +1,6 @@
 #include"BinarySearchTree.h"
 
-void BSTreeInOrder(BSTreeNode* tree)//ÖÐÐò±éÀú
+void BSTreeInOrder(BSTreeNode* tree)//ä¸­åºéåŽ†
 {
 	if (NULL == tree)
 		return;
@@ -8,7 +8,7 @@ void BSTreeInOrder(BSTreeNode* tree)//ÖÐÐò±éÀú
 	printf("%d ", tree->data);
 	BSTreeInOrder(tree->_right);
 }
-void BTreePrevOrder(BSTreeNode* tree)//Ç°Ðò±éÀú
+void BTreePrevOrder(BSTreeNode* tree)//å‰åºéåŽ†
 {
 	if (NULL == tree)
 		return;
@@ -28,13 +28,13 @@ BSTreeNode* BuyBSTreeNode(DataType data)
 	return node;
 }
 
-//³É¹¦·µ»Ø0£¬Ê§°Ü·µ»Ø-1
-int BSTreeNodeInsertR(BSTreeNode** tree, DataType data)//µÝ¹é
+//æˆåŠŸè¿”å›ž0ï¼Œå¤±è´¥è¿”å›ž-1
+int BSTreeNodeInsertR(BSTreeNode** tree, DataType data)//é€’å½’
 {
 	if (*tree == NULL)
 	{
 		*tree = BuyBSTreeNode(data);
-		return 0;
+		return 0; 
 	}
 	if ((*tree)->data > data)
 		return BSTreeNodeInsertR(&(*tree)->_left, data);
@@ -43,7 +43,7 @@ int BSTreeNodeInsertR(BSTreeNode** tree, DataType data)//µÝ¹é
 	else
 		return -1;
 }
-int BSTreeNodeInsert(BSTreeNode** tree, DataType data)//·ÇµÝ¹é
+int BSTreeNodeInsert(BSTreeNode** tree, DataType data)//éžé€’å½’
 {
 	if (*tree == NULL)
 	{
@@ -55,19 +55,19 @@ int BSTreeNodeInsert(BSTreeNode** tree, DataType data)//·ÇµÝ¹é
 	while (cur)
 	{
 		parent = cur;
-		if (parent->data > data)//×óÊ÷
+		if (parent->data > data)//å·¦æ ‘
 		{
 			cur = cur->_left;
 		}
-		else if (parent->data < data)//ÓÒÊ÷
+		else if (parent->data < data)//å³æ ‘
 		{
 			cur = cur->_right;
 		}
 		else
 			return -1;
 	}
-	//Ê÷ÀïÃ»ÓÐÏàÍ¬Êý¾Ý£¬²åÈë£¬ÅÐ¶ÏËù²åÎ»ÖÃ
-	if (parent->data > data)//Èç¹ûÊý¾ÝÐ¡ÓÚ¸¸Ç×£¬Ïò¸¸Ç×½ÚµãµÄ×óÊ÷Á´½Ó
+	//æ ‘é‡Œæ²¡æœ‰ç›¸åŒæ•°æ®ï¼Œæ’å…¥ï¼Œåˆ¤æ–­æ‰€æ’ä½ç½®
+	if (parent->data > data)//å¦‚æžœæ•°æ®å°äºŽçˆ¶äº²ï¼Œå‘çˆ¶äº²èŠ‚ç‚¹çš„å·¦æ ‘é“¾æŽ¥
 		parent->_left = BuyBSTreeNode(data);
 	else
 		parent->_right = BuyBSTreeNode(data);
@@ -95,9 +95,9 @@ int BSTreeRemove(BSTreeNode** tree, DataType data)
 	BSTreeNode* parent = *tree;
 	BSTreeNode* del = NULL;
 	BSTreeNode* sub = NULL;
-	//1.×óÎª¿Õ
-	//2.ÓÒÎª¿Õ
-	//3.×óÓÒ²»Îª¿Õ
+	//1.å·¦ä¸ºç©º
+	//2.å³ä¸ºç©º
+	//3.å·¦å³ä¸ä¸ºç©º
 	while (cur)
 	{
 		
@@ -111,21 +111,21 @@ int BSTreeRemove(BSTreeNode** tree, DataType data)
 			parent = cur;
 			cur = cur->_left;
 		}
-		//ÒÑ¾­ÕÒµ½±»É¾³ý½Úµãcur
+		//å·²ç»æ‰¾åˆ°è¢«åˆ é™¤èŠ‚ç‚¹cur
 		else
 		{
 			del = cur;
-			if (cur->_left == NULL)//×óº¢×Ó¿Õ
+			if (cur->_left == NULL)//å·¦å­©å­ç©º
 			{
 				if (parent->_left == cur)
 					parent->_left = cur->_right;
 				else if (parent->_right == cur)
 					parent->_right = cur->_right;
-				else if (parent == cur)//ËùÉ¾½ÚµãÎÞº¢×Ó
+				else if (parent == cur)//æ‰€åˆ èŠ‚ç‚¹æ— å­©å­
 					*tree = parent->_right;
-					cur = NULL;//É¾³ýºóÒªÌø³öÑ­»·
+					cur = NULL;//åˆ é™¤åŽè¦è·³å‡ºå¾ªçŽ¯
 			}
-			else if (cur->_right == NULL)//ÓÒº¢×ÓÎª¿Õ
+			else if (cur->_right == NULL)//å³å­©å­ä¸ºç©º
 			{
 				if (parent->_right == cur)
 					parent->_right = cur->_left;
@@ -135,7 +135,7 @@ int BSTreeRemove(BSTreeNode** tree, DataType data)
 					*tree = parent->_left;
 					cur = NULL;
 			}
-			else//×óÓÒº¢×Ó¶¼²»Îª¿Õ
+			else//å·¦å³å­©å­éƒ½ä¸ä¸ºç©º
 			{
 				sub = cur;
 				del = cur->_right;
@@ -164,14 +164,14 @@ int BSTreeRemoveR(BSTreeNode** tree, DataType data)
 		return BSTreeRemoveR(&(*tree)->_left, data);
 	else if ((*tree)->data < data)
 		return BSTreeRemoveR(&(*tree)->_right, data);
-	else//ÕÒµ½É¾³ýµÄ½Úµã
+	else//æ‰¾åˆ°åˆ é™¤çš„èŠ‚ç‚¹
 	{
 		BSTreeNode* del = *tree;
-		if ((*tree)->_left == NULL)//×ó¿Õ
+		if ((*tree)->_left == NULL)//å·¦ç©º
 			*tree = (*tree)->_right;
-		else if ((*tree)->_right == NULL)//ÓÒ¿Õ
+		else if ((*tree)->_right == NULL)//å³ç©º
 			*tree = (*tree)->_left;
-		else//×óÓÒ¶¼²»Îª¿Õ
+		else//å·¦å³éƒ½ä¸ä¸ºç©º
 		{
 			BSTreeNode* sub = (*tree);
 			del = (*tree)->_right;
@@ -211,7 +211,7 @@ void TestBSTree()
 	printf("\n");
 
 	const BSTreeNode* cur = BSTreeNodeFind(tree, 7);
-	printf("²éÕÒ7£¿%d\n",cur->data );
+	printf("æŸ¥æ‰¾7ï¼Ÿ%d\n",cur->data );
 
 	BSTreeRemove(&tree, 4);
 	BSTreeRemove(&tree, 8);
